@@ -1307,19 +1307,8 @@ cars = [
 
 // Your job is to produce the following reports for the dealership 
 // based on their total 2017 sales.
-// businesses.forEach(business => {
-//     let totalOrders = business.orders.reduce(
-//         (currentTotal, nextValue) => currentTotal += nextValue,
-//         0
-//     )
-// businesses.forEach(business => {
-    //     /* CALCULATE ORDER SUMMARY using forEach() method*/
-    //     let totalOrders = 0
-    //     business.orders.forEach(order => totalOrders += order)
-    
 
 // Total profit for 2017
-
 const total = cars.map(car => {
    let totalProfit = 0; 
     totalProfit += car.gross_profit
@@ -1328,10 +1317,6 @@ const total = cars.map(car => {
 console.log(total)
 
 // In which month did they sell the most cars?
-// const monthSoldMost = cars.filter(car => {
-//     console.log(car.purchase_date)
-//  })
-
 const monthSoldMost = cars.map(car => {
     let months = "";
     months += car.purchase_date
@@ -1339,17 +1324,149 @@ const monthSoldMost = cars.map(car => {
 })
 console.log(monthSoldMost)
 
-//  const countMonths = (array, month) => {
-//     return array.filter(value => (value.includes(month))).length
-//  }
+//help from stack Overflow: function to accept an array (ie the monthSoldMost array with all the dates) and month as string "2017-two digit month"
+//individual month element => if the month element includes that particular month as string, 
+//it will get passed into the new array... then return the length of that array (ie how many times that month string shows up)
+ const countMonths = (array, month) => {
+    return array.filter(monthElement => (monthElement.includes(month))).length
+ }
 
-//  console.log(countMonths(monthSoldMost, "2017-01"))
-//  console.log(countMonths(monthSoldMost, "2017-02"))
-//  console.log(countMonths(monthSoldMost, "2017-03"))
-//  console.log(countMonths(monthSoldMost, "2017-04"))
+ console.log(countMonths(monthSoldMost, "2017-01")) //4
+ console.log(countMonths(monthSoldMost, "2017-02")) //2
+ console.log(countMonths(monthSoldMost, "2017-03")) //6
+ console.log(countMonths(monthSoldMost, "2017-04")) //4
+ console.log(countMonths(monthSoldMost, "2017-05")) //3
+ console.log(countMonths(monthSoldMost, "2017-06")) //8
+ console.log(countMonths(monthSoldMost, "2017-07")) //3
+ console.log(countMonths(monthSoldMost, "2017-08")) //4
+ console.log(countMonths(monthSoldMost, "2017-09")) //5
+ console.log(countMonths(monthSoldMost, "2017-10")) //0
+ console.log(countMonths(monthSoldMost, "2017-11")) //9 Month of November sold the most cars
+ console.log(countMonths(monthSoldMost, "2017-12")) //4
 
-// Which salesperson sold the most cars?
-// Which salesperson made the most profit?
-// Which model was the most popular?
+// Which salesperson sold the most cars? (Botsford sold the most cars - 6 cars)
+//map-ing the cars array and putting all the car sales people's last names in array
+const salesPerson = cars.map(car => {
+    let people = "";
+    people += car.sales_agent.last_name
+    return people
+})
+console.log(salesPerson)
+
+//with the help of Stack Overflow: use reduce method to create an object with last names as keys and how many
+//times they show up as the values
+const countSalesPerson = salesPerson.reduce((accumulator, currentLastName) => {
+    // if the value of the property in this object we are creating is 'undefined' or not there (this is undefined string, not same as the undefined value) => because we are creating the object from scratch (empty object), none of them will be there yet
+    if (typeof accumulator[currentLastName] === "undefined") {
+        // create the key value pair and give it the value of 1
+        accumulator[currentLastName] = 1;
+        // else... if the key value already exists, make sure you are incrementing the occurrence by 1 each time (every time you loop back with the next last name in the array)
+    } else {
+        accumulator[currentLastName] += 1;
+    }
+    return accumulator
+}, {})
+console.log(countSalesPerson) //Botsford sold the most cars 
+
+//??? Which salesperson made the most profit? //Schulist made the most profit 
+const salesPersonProfit = cars.map(car => {
+    return ` {${car.sales_agent.last_name} : ${car.gross_profit}}`
+})
+console.log(salesPersonProfit);
+
+const totals = cars.map(car => {
+    let totalProfit = 0; 
+     totalProfit += car.gross_profit
+     return totalProfit
+ })
+
+// const findSalesPersonProfit = (personArray, profitArray) => { 
+//     let profitPersonArray = [];
+//     profitArray.map(profit => {
+//         profitPersonArray.push(profit)
+//     })
+//         personArray.map(person => {
+//             profitPersonArray.push(person)
+//         })  
+       
+   
+//     return profitPersonArray  
+//     }
+
+// console.log(findSalesPersonProfit(salesPerson, totals))
+    
+const countSales = (array, lastName) => {
+    return array.filter(elementString => (elementString.includes(lastName)))
+ }
+
+ console.log(countSales(salesPersonProfit, "Aufderhar"))
+ console.log(countSales(salesPersonProfit, "Bahringer"))
+ console.log(countSales(salesPersonProfit, "Botsford"))
+ console.log(countSales(salesPersonProfit, "Collier"))
+ console.log(countSales(salesPersonProfit, "Davis"))
+ console.log(countSales(salesPersonProfit, "Denesik"))
+ console.log(countSales(salesPersonProfit, "Engelstein"))
+ console.log(countSales(salesPersonProfit, "Feil"))
+ console.log(countSales(salesPersonProfit, "Fritsch"))
+ console.log(countSales(salesPersonProfit, "Grimes"))
+ console.log(countSales(salesPersonProfit, "Hayes"))
+ console.log(countSales(salesPersonProfit, "Hoeger"))
+ console.log(countSales(salesPersonProfit, "Jaskolski"))
+ console.log(countSales(salesPersonProfit, "Kris"))
+ console.log(countSales(salesPersonProfit, "Lang"))
+ console.log(countSales(salesPersonProfit, "Larkin"))
+ console.log(countSales(salesPersonProfit, "Jaskolski"))
+ console.log(countSales(salesPersonProfit, "Leannon"))
+ console.log(countSales(salesPersonProfit, "Lubowitz"))
+ console.log(countSales(salesPersonProfit, "Morar"))
+ console.log(countSales(salesPersonProfit, "Mosciski"))
+ console.log(countSales(salesPersonProfit, "Mueller"))
+ console.log(countSales(salesPersonProfit, 'O"Kon'))
+ console.log(countSales(salesPersonProfit, "Pagac"))
+ console.log(countSales(salesPersonProfit, "Rogahn"))
+ console.log(countSales(salesPersonProfit, "Schowalter"))
+ console.log(countSales(salesPersonProfit, "Schulist")) //Schulist made most profit 
+ console.log(countSales(salesPersonProfit, "Smith"))
+ console.log(countSales(salesPersonProfit, "Swift"))
+ console.log(countSales(salesPersonProfit, "White"))
+ console.log(countSales(salesPersonProfit, "Wyman"))
+ console.log(countSales(salesPersonProfit, "Zieme"))
+
+// Which model was the most popular? (DamFresh and Volttanphase- 5 sold of each)
+const carModel = cars.map(car => {
+    let model = "";
+    model += car.vehicle.model
+    return model
+})
+console.log(carModel);
+
+const mostPopularModel = carModel.reduce((accumulator, currentModel) => {
+    if (typeof accumulator[currentModel] === "undefined") {
+        accumulator[currentModel] = 1
+    } else {
+        accumulator[currentModel] += 1
+    }
+    return accumulator
+}, {});
+console.log(mostPopularModel); //DamFresh and Volttanphase are the most popular models (both sold 5)
+
 // Which bank provided the most loans to our customers?
+const bankLoans = cars.map(car =>{
+    let banks = "";
+    banks += car.credit.credit_provider;
+    return banks
+});
+console.log(bankLoans);
+
+const bankLoansProvided = bankLoans.reduce((accumulator, currentBank) => {
+    if (typeof accumulator[currentBank] === "undefined") {
+        accumulator[currentBank] = 1;
+    } else {
+        accumulator[currentBank] += 1;
+    }
+    return accumulator
+}, {})
+console.log(bankLoansProvided); //J.P.Morgan Chase & Co (9 loans)
+
 // In which month did zero cars get sold?
+console.log(countMonths(monthSoldMost, "2017-10")) //0; Month of October sold no cars

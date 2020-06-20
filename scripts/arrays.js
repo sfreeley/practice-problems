@@ -112,7 +112,7 @@ const businesses = [
     }
   ];
 
-// forEach()
+// forEach()-takes in callback function that does return a value but ONLY WITHIN scope created by the method, not outside it! => will return undefined
 /* Lightning Exercise: Add another section sibling to the current one and use 
 object dot notation to display each company's city. Use square bracket notation 
 display the state code. ??Use dynamic square bracket notation to add the zip code??.*/ 
@@ -301,11 +301,12 @@ document
     /*Practice: Big Spenders: produce a report for him that list only the companies 
     that have placed an order for more than nine thousand dollars."*/
     // Array to contain all the big spenders
-    businesses.forEach(business => {
+    const a = businesses.forEach(business => {
         business.orders.filter(order => {
             if (order > 9000) { 
             console.log(business.companyName)
             }
+            
     })
 })
 
