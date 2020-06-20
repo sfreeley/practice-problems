@@ -1,3 +1,4 @@
+
 const businesses = [
     {
       purchasingAgent: { nameLast: "Kirlin", nameFirst: "Kristy" },
@@ -131,7 +132,7 @@ businesses.forEach(business => {
   outEl.innerHTML += "<hr/>"
 });
 
-// filter()
+// filter()-creates new array from existing one(function you pass to filter should return boolean)- if true, current item will be added to new array
 // Array to contain all the New York businesses
 const newYorkBusinesses = businesses.filter(business => {
     let inNewYork = false
@@ -168,7 +169,8 @@ const newYorkBusinesses = businesses.filter(business => {
 
 /*
     Using map(), you extract the purchasing agent object
-    from each business and store it in a new array
+    from each business and store it in a new array-- map() is used for transforming items in one array to 
+    different structure and storing new items in another array
 
 Lightning Exercise: Instead of just returning the purchasing agent object, 
 return a new object that has the full name of the purchasing agent, 
@@ -183,9 +185,7 @@ const agents = businesses.map(business => {
     <section>
     ${business.phoneWork}
     </section>
-    
-    `         
-  
+  `         
 })
 
 outEl.innerHTML += agents.join("")
@@ -211,6 +211,169 @@ outEl.innerHTML += "<hr>"
 //     `   
 // })
 
-// find()
+// find()- iterates an array and as soon as it finds item you specify, it returns the item
+/*Lightning Exercise 1: Refactor your code to search for purchasing agents instead. 
+If the search text is found in the first name of any purchasing agent, show that agent.
+
+Lightning Exercise 2: Refactor your code so that if the search text is found in the first name, 
+or last name, of any purchasing agent, show that agent. */
+// targeting input box 
+document
+    .querySelector("#companySearch")
+    .addEventListener("keypress", keyPressEvent => {
+        if (keyPressEvent.charCode === 13) {
+            /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS */
+            // iterating through businesses array and finding the purchasing agent's information by searching either first or last name 
+            const foundBusiness = businesses.find(
+                business =>
+                    business.purchasingAgent.nameFirst.includes(keyPressEvent.target.value) ||
+                    business.purchasingAgent.nameLast.includes(keyPressEvent.target.value)
+            )
+
+            outEl.innerHTML = `
+                <h2>
+                ${foundBusiness.purchasingAgent.nameFirst} ${foundBusiness.purchasingAgent.nameLast}
+                </h2>
+                <section>
+                ${foundBusiness.addressFullStreet}
+
+                </section>
+                <section>
+                ${foundBusiness.addressCity},
+                ${foundBusiness.addressStateCode}
+                ${foundBusiness.addressZipCode}
+                </section>
+            `;
+         }
+        })
+   
+
+    /* reduce() - One of the main purposes of the reduce method is to iterate over a collection, 
+    do some logic with each item, and have one, single result at the end.*/
+    // businesses.forEach(business => {
+    //     /* CALCULATE ORDER SUMMARY using forEach() method*/
+    //     let totalOrders = 0
+    //     business.orders.forEach(order => totalOrders += order)
+    
+    /* CALCULATE ORDER SUMMARY using reduce() method */
+    businesses.forEach(business => {
+        let totalOrders = business.orders.reduce(
+            (currentTotal, nextValue) => currentTotal += nextValue,
+            0
+        )
+    
+    
+        outEl.innerHTML += `
+            <h2>
+                ${business.companyName}
+                ($${totalOrders})
+            </h2>
+            <section>
+                ${business.addressFullStreet}
+            </section>
+            <section>
+                ${business.addressCity},
+                ${business.addressStateCode}
+                ${business.addressZipCode}
+            </section>
+        `;
+        outEl.innerHTML += "<hr/>";
+    
+    } )
 
 
+    /* Lightning Exercise 1: Use the reduce method on the following array to 
+    determine how much total rain fell last month. */
+    const monthlyRainfall = [23, 13, 27, 20, 20, 31, 33, 26, 19, 12, 14, 12, 10]
+
+    const totalRainfall = monthlyRainfall.reduce( (currentTotal, nextValue) => currentTotal += nextValue,
+    0)
+
+    console.log(totalRainfall)
+
+    /* Lightning Exercise 2: Use the reduce method on the following array to build a sentence. */
+    const words = ["The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog"]
+
+    const sentence = words.reduce((currentWord, nextWord) => currentWord += " " + nextWord, "" )
+
+    console.log(sentence)
+
+    /*Practice: Big Spenders: produce a report for him that list only the companies 
+    that have placed an order for more than nine thousand dollars."*/
+    // Array to contain all the big spenders
+    businesses.forEach(business => {
+        business.orders.filter(order => {
+            if (order > 9000) { 
+            console.log(business.companyName)
+            }
+    })
+})
+
+
+//Practice: Solar System
+const planets = ["mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune"]
+
+/*
+    Use the forEach method to add the name of each planet
+    to a section element in your HTML with an id of "planets".
+    Use string templates to construct the DOM elements.
+*/
+let planetEl = document.getElementById("planets")
+planets.forEach(planet => 
+    {
+
+        planetEl.innerHTML +=
+         ` <div>
+            ${planet}
+           </div>
+        `
+    } )
+
+
+/*
+    Use the map method to create a new array where the
+    first letter of each planet is capitalized. Use the
+    `toUpperCase()` method on strings.
+
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase
+*/
+planets.map(planet => {
+    planetEl.innerHTML += `
+    <div>
+    ${planet.charAt(0).toUpperCase() + planet.slice(1)}
+    </div>
+    `
+})
+
+/*
+    Use the filter method to create a new array that
+    contains planets with the letter 'e'. Use the `includes()`
+    method on strings.
+
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
+*/
+planets.filter(planet => {
+    if (planet.includes("e")) {
+        planetEl.innerHTML +=
+        `<div>
+            ${planet}
+        </div> 
+        `
+    }
+})
+
+/*Practice Challenge: Chaining Methods
+Using one single line of JavaScript code, complete the following tasks on the array of integers below.
+*/
+const integers = [13, 25, 6, 3, 11, 2, 18, 7, 21, 1, 29, 20, 12, 8];
+
+//Sort the numbers in descending order (10, 9, 8, 7, etc)
+//Remove any integers greater than 19
+//Multiply each remaining number by 1.5 and then subtract 1
+// Then output (either in the DOM or the console) the sum of all the resulting numbers.
+const chainingMethods = integers.sort((a, b) => b - a).filter(integer => integer < 19).map(num => (num * 1.5) - 1).reduce((totalValue, nextValue) => totalValue += nextValue, 0)
+
+console.log(chainingMethods);
+
+
+    
