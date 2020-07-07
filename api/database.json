@@ -1,0 +1,75 @@
+{
+    "employees": [
+        {
+            "id": 1,
+            "name": "Rainu Ittycheriah",
+            "departmentId": 3,
+            "computerId": 2
+        },
+
+        {
+            "id": 2,
+            "name": "Miss Piggy",
+            "departmentId": 1,
+            "computerId": 4
+        },
+
+        {
+            "id": 3,
+            "name": "Kermit",
+            "departmentId": 2,
+            "computerId": 1
+        },
+
+        {
+            "id": 4,
+            "name": "Fozzie",
+            "departmentId": 4,
+            "computerId": 3
+        }
+    ],
+
+    "departments": [
+        {
+            "id": 1,
+            "department": "Design" 
+        },
+
+        {
+            "id": 2,
+            "department": "Sales"
+        },
+
+        {
+            "id": 3,
+            "department": "IT"
+        },
+
+        {
+            "id": 4,
+            "department": "Human Resources"
+        }
+    ],
+
+    "computers": [
+        {
+            "id": 1,
+            "type": "2016 Windows Surface"
+        },
+
+        {
+            "id": 2,
+            "type": "2015 MacBook Pro"
+        },
+
+        {
+            "id": 3,
+            "type": "2018 Lenovo ThinkPad"
+        },
+
+        {
+            "id": 4,
+            "type": "2012 MacBook Air"
+        }
+    ]
+}
